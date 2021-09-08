@@ -1,0 +1,84 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous">
+    <script type="text/javascript" src="https://canvasjs.com/assets/script/jquery-1.11.1.min.js"></script>
+    <script type="text/javascript" src="https://canvasjs.com/assets/script/canvasjs.stock.min.js"></script>
+    <!-- Load plotly.js into the DOM -->
+	<script src='https://cdn.plot.ly/plotly-2.4.2.min.js'></script>
+	<script src='https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.17/d3.min.js'></script> 
+    <style>
+        .my_box{
+            margin-top: 5em; 
+            display: grid;
+            grid-template-columns: 0.5fr 1.5fr;
+        }
+    </style>
+    <title>Stock Analysis</title>
+</head>
+<body style="background:#56CCF2; background: linear-gradient(90deg, #125581e0 0,#6dd4fac5 58%);">
+    <div class="container">
+        <h2 class="" style="font-size: 75px; color: #022943;margin-left: 450px;">Dashboard</h2>
+            <div class="row">
+                <div class="col" style="margin-top: 70px;">
+                    <div class="card" style=" min-height: 300px;min-width: 100px;">
+                      <form  action="{% url 'ShowStock' %}" method="POST">
+                        {% csrf_token %}
+                        <div class="card-body">
+                            <h5 class="card-title" style="font-size: 30px; color: #022943;">Filter</h5>
+                        <select class="form-select" aria-label="Default select example" name="symbol">
+                            <option selected>{{sym_name}}</option>
+                            {% for sym in symbols %}
+                                <option value="{{sym}}">{{sym}}</option>
+                            {% endfor %}
+                        </select><br>
+                        <!-- <a href="#" class="card-link">Another link</a> -->
+                        <select class="form-select" aria-label="Default select example" name="interval">
+                            <option selected value="">{{interval}}</option>
+                            <option value="Monthly">Monthly</option>
+                            <option value="Weekly">Weekly</option>
+                        </select>
+                        <select class="form-select mt-3" aria-label="Default select example">
+                            <option selected>OHLC</option>
+
+                        </select>
+                        <input class="btn btn-primary mt-3 btn-lg center" type="submit" value="Search">
+                        </div>
+                    </form>
+                      </div>
+                </div>
+                <div class="col" style="margin-top: 70px;">
+                    <div class="card" style=" min-height: 400px;min-width: 900px;">
+                        <div class="card-body">
+                          <h5 class="card-title" style="font-size: 30px; color: #022943;">Company details</h5>
+                          <h6 class="card-subtitle mb-2 text-muted" style="font-size: 25px;">Name:</h6>
+                          <div style="font-size: 15px;">{{name}}</div>
+                          <h6 class="card-subtitle mb-2 text-muted mt-3" style="font-size: 25px;">Description:</h6>
+                          <div style="font-size: 15px;">{{descr}}</div>
+                        </div>
+                      </div>
+                </div>
+                <div class="col" style="margin-top: 70px;">
+                    <div class="card mb-3" style=" min-height: 300px; min-width: 100px;" >
+                        <div class="card-body">
+                          <h5 class="card-title" style="font-size: 30px; color: #022943;">Search history</h5>
+                          <h6 class="card-subtitle mb-2 text-muted" style="font-size: 25px;">Blank for now.</h6>
+                          <!-- <div style="font-size: 15px;">Apple</div>
+                          <h6 class="card-subtitle mb-2 text-muted mt-3" style="font-size: 25px;">Description:</h6>
+                          <div style="font-size: 15px;">Innovation is solution.</div> -->
+                        </div>
+                      </div>
+                </div>
+            </div><br><br>
+        
+            <div style="margin-left: 230px;"><img src="{% static 'Dashboard/Images/fig1.png' %}" width="800" height="500"></div>
+        
+    </div>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/chart.js@3.5.1/dist/chart.min.js"></script>
+    
+</body>
+</html>
